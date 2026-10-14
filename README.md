@@ -48,17 +48,9 @@ E = 1/2 * sum(k * (u_j - u_i)^2)
 
 ### 2. `02_trainable_gnn.py`
 
-理解第一个文件后再读这个文件。
+这是接近日常写法的完整训练脚本，不再逐行解释 GNN 原理。注释只提醒 MATLAB 用户容易陌生的 Python 写法：`def/return`、`class/self`、缩进代码块、从 0 开始的切片，以及 `model(...)` 如何调用 `forward(...)`。
 
-它会自动生成 320 个样本，其中 256 个用于训练、64 个用于验证。模型只有：
-
-- 一次消息传递；
-- 一次按目标节点聚合；
-- 一次节点状态更新；
-- 一次平均池化；
-- 一个图级标量输出。
-
-模型没有 Transformer、PyTorch Geometric、`torch.nn.ModuleList`、`torch.nn.Sequential`、DataLoader 或配置系统。
+脚本会自动生成 320 个样本，其中 256 个用于训练、64 个用于验证。它不使用 Transformer、PyTorch Geometric、`torch.nn.ModuleList`、`torch.nn.Sequential`、DataLoader 或配置系统。
 
 ## 如何运行
 
@@ -103,7 +95,7 @@ python -m pip install torch
 - `aggregated_message_sum.index_add_(...)`：消息按目标节点相加；
 - `updated_node_state = torch.relu(...)`：节点状态更新；
 - `graph_state = torch.mean(...)`：节点状态池化成图状态；
-- `train_loss.backward()`：PyTorch 计算梯度；
+- `loss.backward()`：PyTorch 计算梯度；
 - `optimizer.step()`：参数真正更新。
 
 ## Python、PyTorch 与自定义名称如何区分
